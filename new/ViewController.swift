@@ -9,15 +9,10 @@
 import UIKit
 import CoreImage
 
-var CIFilterNames = "CIPhotoEffectChrome"
+
 
 class ViewController: UIViewController, communicationView, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
   
-    
-  
-    @IBOutlet weak var buttonFilter: UIButton!
-
-    @IBOutlet weak var imageToFilter: UIImageView!
     
 
     @IBOutlet weak var swipeGesture: UISwipeGestureRecognizer!
@@ -26,9 +21,10 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     
     @IBOutlet var buttonLayout: [UIButton]!
     @IBOutlet weak var layout: LayoutView!
-    @IBOutlet weak var layoutSelected: UIImageView!
+    @IBOutlet var layoutSelected: [UIImageView]!
     
-    var subview = Subview()
+    var i = 0
+    let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow]
     
     private var selectImageView: UIImageView!
     //var subview = Subview()
@@ -38,25 +34,26 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
         layout.delegate = self
         selectedLayout(buttonLayout[1])
+        //layout.layout = .layout2
         swipe()
        
         
         
     }
     
-
-    
-    @IBAction func iChoiceFilter(){
-        let darkBlur = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        let blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = imageToFilter.frame
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        imageToFilter.addSubview(blurView)
-    
+   /* override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        selectedLayout(buttonLayout[1])
+    }
+    */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Filter"{
+            let filtersViewController = segue.destination as! FiltersViewController
+            filtersViewController.imgOriginal = self.transformateViewOnImage()
+        }
     }
     
    
-
     func swipe(){
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
@@ -96,7 +93,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
+        imagePicker.allowsEditing = true
         let actionSheet = UIAlertController(title: "Add Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction) in
@@ -115,8 +112,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil
         ))
-        //imagePicker.sourceType = .photoLibrary
-        //imagePicker.sourceType = .camera
+        
         present(actionSheet, animated: true, completion: nil)
         
     }
@@ -131,27 +127,74 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         switch sender {
         case buttonLayout[0]:
             layout.layout = .layout1
-            layoutSelected.center = buttonLayout[0].center
+            isHidden(index: 1)
+            isHidden(index: 2)
+            layoutSelected[0].isHidden = false
         case buttonLayout[1]:
             layout.layout = .layout2
-            layoutSelected.center = buttonLayout[1].center
+            isHidden(index: 0)
+            isHidden(index: 2)
+            layoutSelected[1].isHidden = false
         case buttonLayout[2]:
             layout.layout = .layout3
-            layoutSelected.center = buttonLayout[2].center
+            isHidden(index: 0)
+            isHidden(index: 1)
+            layoutSelected[2].isHidden = false
         default:
             break
             }
+    }
+    
+    /*  func imageSelectedIsHidden(index: UIImageView){
+     let indexKey = index
+     var index1: Bool = false
+     for i in layoutSelected {
+     if i != indexKey{
+     index1 = true
+     }
+     }
+     
+     if index1 {
+     layoutSelected[index1].isHidden = true
+     } else {
+     layoutSelected[
+     }
+     
+     }
+     */
+    
+    func isHidden(index: Int){
+        layoutSelected[index].isHidden = true
     }
 
     @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer) {
         if let swipeGesture = sender as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.left:
-                shareImg()
-                print("gauche")
+                let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
+                
+                actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
+                    self.shareImg()
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Add to filter", style: .default, handler: { (action: UIAlertAction!) in
+                    self.performSegue(withIdentifier: "Filter", sender: self)
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil
+                ))
+                present(actionSheet, animated: true, completion: nil)
+                
             case UISwipeGestureRecognizer.Direction.up:
-                shareImg()
-                print("haut")
+                let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
+                
+                actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
+                    self.shareImg()
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Add to Filter", style: .default, handler:{ (action:UIAlertAction) in
+                    self.performSegue(withIdentifier: "Filter", sender: self)
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil
+                ))
+                present(actionSheet, animated: true, completion: nil)
             default: break
             }
         }
@@ -167,6 +210,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     
     func shareImg() {
         shareLayoutUsingActivityViewController(imageParamater: (transformateViewOnImage()))
+        
     }
     
     func shareLayoutUsingActivityViewController(imageParamater: UIImage) {
@@ -175,58 +219,59 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         let objActivityViewController = UIActivityViewController(activityItems: activityItem as [UIImage], applicationActivities: nil)
         objActivityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
         
-        // objActivityViewController.popoverPresentationController?.sourceView = sender
+        
         self.present(objActivityViewController, animated: true, completion: nil)
-        /*{
-            objActivityViewController.completionWithItemsHandler = { activity, success, items, error in
-                
-                if !success { print("cancelled")
-                    return
-                }/*
-                
-                if activity == UIActivity.ActivityType.mail {
-                    print("mail")
-                }
-                else if activity == UIActivity.ActivityType.message {
-                    print("message")
-                }
-                else if activity == UIActivity.ActivityType.saveToCameraRoll {
-                    print("camera")
-                }*/
-            }
-        })*/
+        
     }
     
- /*   @IBAction func blurButtonTapped(_ sender: Any) {
+    func attributedColor() {
+        let color = colorArray[i]
+        layout.borderColor = color
+        for y in 0..<layout.imageSubview.count {
+            layout.imageSubview[y].color = color
+        }
         
-        let inputImage = CIImage(cgImage: (self.layout.asImage()?.cgImage)!)
-        let filter = CIFilter(name: "CIGaussianBlur")
-        filter?.setValue(inputImage, forKey: "inputImage")
-        filter?.setValue(10, forKey: "inputRadius")
-        let blurred = filter?.outputImage
-        
-        var newImageSize: CGRect = (blurred?.extent)!
-        newImageSize.origin.x += (newImageSize.size.width - (self.layout.asImage()?.size.width)!) / 2
-        newImageSize.origin.y += (newImageSize.size.height - (self.layout.asImage()?.size.height)!) / 2
-        newImageSize.size = (self.layout.asImage()?.size)!
-        
-        let resultImage: CIImage = filter?.value(forKey: "outputImage") as! CIImage
-        let context: CIContext = CIContext.init(options: nil)
-        let cgimg: CGImage = context.createCGImage(resultImage, from: newImageSize)!
-        let blurredImage: UIImage = UIImage.init(cgImage: cgimg)
-        self.layout.asImage() = blurredImage
     }
-   */
-   /*
-    @IBAction func addFilter(){
-        //transformateViewOnImage().addBlur()
-        let darkBlur = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        let blurView = UIVisualEffectView(effect: darkBlur)
-        blurView.frame = self.transformateViewOnImage().
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        bg_imagview.addSubview(blurView)
+    
+    func choiceBorderColor() {
+        if i <= colorArray.count - 1 {
+            attributedColor()
+            i += 1
+        } else {
+            i = 0
+            attributedColor()
+            i += 1
+        }
     }
- */
+    
+    @IBAction func borderColor() {
+        choiceBorderColor()
+        
+    }
+    
+    
+    @IBAction func sliderThiknessBorder(_ sender: UISlider){
+        if layout.layout == .layout1 {
+        layout.borderWidth = CGFloat(sender.value)
+            for y in 0..<layout.imageSubview.count {
+            layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
+            }
+        selectedLayout(buttonLayout[0])
+        } else if layout.layout == .layout2 {
+            layout.borderWidth = CGFloat(sender.value)
+            for y in 0..<layout.imageSubview.count {
+                layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
+            }
+            selectedLayout(buttonLayout[1])
+        } else {
+            layout.borderWidth = CGFloat(sender.value)
+            for y in 0..<layout.imageSubview.count {
+                layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
+            }
+            selectedLayout(buttonLayout[2])
+        }
+    }
+    
 }
 
 

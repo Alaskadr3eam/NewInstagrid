@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		317BBA90221BF1A40008216B /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317BBA8F221BF1A40008216B /* FiltersViewController.swift */; };
 		BA96256C220B8F720072D76B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA96256B220B8F720072D76B /* AppDelegate.swift */; };
 		BA96256E220B8F720072D76B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA96256D220B8F720072D76B /* ViewController.swift */; };
 		BA962571220B8F720072D76B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA96256F220B8F720072D76B /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		317BBA8F221BF1A40008216B /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		BA962568220B8F720072D76B /* new.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = new.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA96256B220B8F720072D76B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA96256D220B8F720072D76B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				BA96256B220B8F720072D76B /* AppDelegate.swift */,
 				BA96256D220B8F720072D76B /* ViewController.swift */,
+				317BBA8F221BF1A40008216B /* FiltersViewController.swift */,
 				BAAABD33220D8A2E0030FA12 /* LabelShareView.swift */,
 				BA962599220B8FA20072D76B /* Subview.swift */,
 				BAE15A922211666500150040 /* Delm-Medium.otf */,
@@ -277,6 +280,7 @@
 				BA96259A220B8FA20072D76B /* Subview.swift in Sources */,
 				BAAABD34220D8A2F0030FA12 /* LabelShareView.swift in Sources */,
 				BA96256E220B8F720072D76B /* ViewController.swift in Sources */,
+				317BBA90221BF1A40008216B /* FiltersViewController.swift in Sources */,
 				BA96256C220B8F720072D76B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,7 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = new/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -474,7 +478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ABP4G8VUJL;
 				INFOPLIST_FILE = new/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

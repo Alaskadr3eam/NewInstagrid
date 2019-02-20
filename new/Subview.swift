@@ -10,20 +10,21 @@ import UIKit
 
 class Subview: UIView {
     
-    @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet {
-            layer.borderWidth = borderWidth
-        }
-    }
-    
-    @IBInspectable var borderColor: UIColor? {
-        didSet {
-            layer.borderColor = borderColor?.cgColor
-        }
-    }
-    
     @IBOutlet weak var buttonAddPicture: UIButton!
     @IBOutlet weak var image: UIImageView!
+    
+    var color = UIColor() {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    var lineWidth: CGFloat = 1
+    var edges = [UIRectEdge](){
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+
     
  //    var delegate1: pinchInImage?
     //var delegate: communicationView?
@@ -37,25 +38,59 @@ class Subview: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    /*
-    func pinch(){
-        pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchedView(pinch:)))
-        self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(pinchGesture)
-    }
-    */
-    @IBAction func handlePan(recognizer:UIPinchGestureRecognizer) {
-        if let view = recognizer.view {
-            view.transform = view.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
-            recognizer.scale = 1
+
+}
+
+    
+
+extension Subview {
+    
+    override func draw(_ rect: CGRect) {
+        if edges.contains(.top) || edges.contains(.all){
+            let path = UIBezierPath()
+            path.lineWidth = lineWidth
+            color.setStroke()
+            UIColor.blue.setFill()
+            path.move(to: CGPoint(x: 0, y: 0 + lineWidth / 2))
+            path.addLine(to: CGPoint(x: self.bounds.width, y: 0 + lineWidth / 2))
+            path.stroke()
+        }
+        if edges.contains(.bottom) || edges.contains(.all){
+            let path = UIBezierPath()
+            path.lineWidth = lineWidth
+            color.setStroke()
+            UIColor.blue.setFill()
+            path.move(to: CGPoint(x: 0, y: self.bounds.height - lineWidth / 2))
+            path.addLine(to: CGPoint(x: self.bounds.width, y: self.bounds.height - lineWidth / 2))
+            path.stroke()
+        }
+        if edges.contains(.left) || edges.contains(.all){
+            let path = UIBezierPath()
+            path.lineWidth = lineWidth
+            color.setStroke()
+            UIColor.blue.setFill()
+            path.move(to: CGPoint(x: 0 + lineWidth / 2, y: 0))
+            path.addLine(to: CGPoint(x: 0 + lineWidth / 2, y: self.bounds.height))
+            path.stroke()
+        }
+        if edges.contains(.right) || edges.contains(.all){
+            let path = UIBezierPath()
+            path.lineWidth = lineWidth
+            color.setStroke()
+            UIColor.blue.setFill()
+            path.move(to: CGPoint(x: self.bounds.width - lineWidth / 2, y: 0))
+            path.addLine(to: CGPoint(x: self.bounds.width - lineWidth / 2, y: self.bounds.height))
+            path.stroke()
         }
     }
-
-  
-
+    
+    
+    func borders(_ localisation: [UIRectEdge], thikness: CGFloat, bColor: UIColor){
+        self.edges = localisation
+        self.lineWidth = thikness
+        self.color = bColor
+    }
+    
+    
 }
-/*
-protocol pinchInImage {
-    func tellWhenPinch(view: Subview)
-}
-*/
+

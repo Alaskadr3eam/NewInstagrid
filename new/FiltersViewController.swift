@@ -53,10 +53,10 @@ class FiltersViewController: UIViewController {
     ]
     
     
-    func prefersStatusBarHidden() -> Bool {
+    /*func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
+    */
     func swipe(){
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
@@ -161,6 +161,9 @@ class FiltersViewController: UIViewController {
                 actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
                     self.shareImg()
                 }))
+                actionSheet.addAction(UIAlertAction(title: "Annulate", style: .default, handler: { (action:UIAlertAction) in
+                    self.performSegue(withIdentifier: "Return", sender: self)
+                }))
                 actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil
                 ))
                 present(actionSheet, animated: true, completion: nil)
@@ -172,6 +175,9 @@ class FiltersViewController: UIViewController {
     
     func shareImg() {
         shareLayoutUsingActivityViewController(imageParamater: (imageToFilter.image!))
+        
+        UIImageWriteToSavedPhotosAlbum(imageToFilter.image!, nil, nil, nil)
+        
     }
     
     func shareLayoutUsingActivityViewController(imageParamater: UIImage) {

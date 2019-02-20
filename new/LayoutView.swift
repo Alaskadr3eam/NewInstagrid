@@ -13,7 +13,7 @@ import QuartzCore
 
 class LayoutView: UIView {
     
-    @IBInspectable var borderWidth: CGFloat = 0 {
+    @IBInspectable var borderWidth: CGFloat = 4 {
         didSet {
             layer.borderWidth = borderWidth
         }
@@ -26,10 +26,7 @@ class LayoutView: UIView {
     }
     
     var subview = Subview()
-    @IBOutlet weak var image1: Subview!
-    @IBOutlet weak var image2: Subview!
-    @IBOutlet weak var image3: Subview!
-    @IBOutlet weak var image4: Subview!
+    @IBOutlet var imageSubview: [Subview]!
     var delegate: communicationView?
    
   
@@ -53,40 +50,50 @@ class LayoutView: UIView {
         }
     }
     
-    
-    
     private func setLayout(_ layout: Layout) {
-        let layoutWidth = self.bounds.width - 8
-        let layoutHeight = self.bounds.height - 8
+        let layoutWidth = self.bounds.width - (self.borderWidth * 2)
+        let layoutHeight = self.bounds.height - (self.borderWidth * 2)
         switch layout {
         case .layout1:
-            image1.frame = CGRect(x: 4, y: 4, width: layoutWidth, height: layoutHeight / 2)
-            image2.frame = CGRect(x: self.bounds.width / 2, y: 4, width: 0, height: 0)
-            image3.frame = CGRect(x: 4, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            image4.frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth, height: layoutHeight / 2)
+            imageSubview[0].borders([.bottom], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: 0, height: 0)
+            //imageSubview[1].borders(<#T##localisation: [UIRectEdge]##[UIRectEdge]#>, thikness: <#T##CGFloat#>, bColor: <#T##UIColor#>)
+            imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[2].borders([.top,.right], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[3].borders([.left,.top], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
         case .layout2:
-            image1.frame = CGRect(x: 4, y: 4, width: layoutWidth / 2, height: layoutHeight / 2)
-            image2.frame = CGRect(x: self.bounds.width / 2, y: 4, width: layoutWidth / 2, height: layoutHeight / 2)
-            image3.frame = CGRect(x: 4, y: self.bounds.height / 2, width: layoutWidth, height: layoutHeight / 2)
-            image4.frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: 0, height: 0)
+            imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[0].borders([.bottom,.right], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[1].borders([.bottom,.left], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth, height: layoutHeight / 2)
+            imageSubview[2].borders([.top], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: 0, height: 0)
+           // imageSubview[3]
         case .layout3:
-            image1.frame = CGRect(x: 4, y: 4, width: layoutWidth / 2, height: layoutHeight / 2)
-            image2.frame = CGRect(x: self.bounds.width / 2, y: 4, width: layoutWidth / 2, height: layoutHeight / 2)
-            image3.frame = CGRect(x: 4, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            image4.frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[0].borders([.bottom,.right], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
+            imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[1].borders([.bottom,.left], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
+            imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[2].borders([.top,.right], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
+            imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
+            imageSubview[3].borders([.left,.top], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
         }
     }
     
     @IBAction func pushButton(button: UIButton) {
         switch button {
-        case image1.buttonAddPicture:
-            delegate?.tellMeWhenTheButtonIsClicked(view: image1)
-        case image2.buttonAddPicture:
-            delegate?.tellMeWhenTheButtonIsClicked(view: image2)
-        case image3.buttonAddPicture:
-            delegate?.tellMeWhenTheButtonIsClicked(view: image3)
-        case image4.buttonAddPicture:
-            delegate?.tellMeWhenTheButtonIsClicked(view: image4)
+        case imageSubview[0].buttonAddPicture:
+            delegate?.tellMeWhenTheButtonIsClicked(view: imageSubview[0])
+        case imageSubview[1].buttonAddPicture:
+            delegate?.tellMeWhenTheButtonIsClicked(view: imageSubview[1])
+        case imageSubview[2].buttonAddPicture:
+            delegate?.tellMeWhenTheButtonIsClicked(view: imageSubview[2])
+        case imageSubview[3].buttonAddPicture:
+            delegate?.tellMeWhenTheButtonIsClicked(view: imageSubview[3])
         default: break
         }
     }
