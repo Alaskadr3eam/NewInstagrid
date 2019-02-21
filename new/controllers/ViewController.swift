@@ -24,7 +24,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     @IBOutlet var layoutSelected: [UIImageView]!
     
     var i = 0
-    let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow]
+    
     
     private var selectImageView: UIImageView!
     //var subview = Subview()
@@ -41,11 +41,6 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
     }
     
-   /* override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        selectedLayout(buttonLayout[1])
-    }
-    */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Filter"{
             let filtersViewController = segue.destination as! FiltersViewController
@@ -94,6 +89,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        imagePicker.
         let actionSheet = UIAlertController(title: "Add Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction) in
@@ -118,7 +114,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        selectImageView.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        selectImageView.image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         dismiss(animated: true, completion: nil)
         
     }
@@ -225,7 +221,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     }
     
     func attributedColor() {
-        let color = colorArray[i]
+        let color = Modele.colorArray[i]
         layout.borderColor = color
         for y in 0..<layout.imageSubview.count {
             layout.imageSubview[y].color = color
@@ -234,7 +230,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     }
     
     func choiceBorderColor() {
-        if i <= colorArray.count - 1 {
+        if i <= Modele.colorArray.count - 1 {
             attributedColor()
             i += 1
         } else {

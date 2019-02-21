@@ -12,7 +12,7 @@ class Subview: UIView {
     
     @IBOutlet weak var buttonAddPicture: UIButton!
     @IBOutlet weak var image: UIImageView!
-    
+  /*
     var color = UIColor() {
         didSet {
             setNeedsDisplay()
@@ -24,7 +24,7 @@ class Subview: UIView {
             setNeedsDisplay()
         }
     }
-
+*/
     
  //    var delegate1: pinchInImage?
     //var delegate: communicationView?
@@ -38,11 +38,76 @@ class Subview: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    var width: CGFloat = 1 {
+        didSet {
+            layer.borderWidth = width
+        }
+    }
+    
+    var color: UIColor! {
+        didSet {
+            layer.borderColor = color.cgColor
+        }
+    }
 
 }
 
-    
 
+
+
+
+extension Subview {
+    func borders(for edges:[UIRectEdge], width:CGFloat = 1, color: UIColor = .black) {
+        
+        if edges.contains(.all) {
+            layer.borderWidth = self.width
+            layer.borderColor = self.color.cgColor
+        } else {
+            let allSpecificBorders:[UIRectEdge] = [.top, .bottom, .left, .right]
+            
+            for edge in allSpecificBorders {
+                if let v = viewWithTag(Int(edge.rawValue)) {
+                    v.removeFromSuperview()
+                }
+                
+                if edges.contains(edge) {
+                    let v = UIView()
+                    v.tag = Int(edge.rawValue)
+                    v.backgroundColor = self.color
+                    v.translatesAutoresizingMaskIntoConstraints = false
+                    addSubview(v)
+                    
+                    var horizontalVisualFormat = "H:"
+                    var verticalVisualFormat = "V:"
+                    
+                    switch edge {
+                    case UIRectEdge.bottom:
+                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
+                        verticalVisualFormat += "[v(\(self.width))]-(0)-|"
+                    case UIRectEdge.top:
+                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
+                        verticalVisualFormat += "|-(0)-[v(\(self.width))]"
+                    case UIRectEdge.left:
+                        horizontalVisualFormat += "|-(0)-[v(\(self.width))]"
+                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
+                    case UIRectEdge.right:
+                        horizontalVisualFormat += "[v(\(self.width))]-(0)-|"
+                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
+                    default:
+                        break
+                    }
+                    
+                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: horizontalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
+                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: verticalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
+                }
+            }
+        }
+    }
+}
+
+    
+/*
 extension Subview {
     
     override func draw(_ rect: CGRect) {
@@ -93,4 +158,4 @@ extension Subview {
     
     
 }
-
+*/

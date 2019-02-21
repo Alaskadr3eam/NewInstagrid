@@ -26,43 +26,14 @@ class FiltersViewController: UIViewController {
     @IBOutlet weak var filtersScrollView: UIScrollView!
     
     /* GLOBAL VARIABLES */
-    var CIFilterNames = [
-        "CIPhotoEffectChrome",
-        "CIPhotoEffectFade",
-        "CIPhotoEffectInstant",
-        "CIPhotoEffectMono",
-        "CIPhotoEffectNoir",
-        "CIPhotoEffectProcess",
-        "CIPhotoEffectTonal",
-        "CIPhotoEffectTransfer",
-        "CILinearToSRGBToneCurve",
-        "CISRGBToneCurveToLinear"
-    ]
+   
     
-    var CIFilterNamesList = [
-        "Chrome",
-        "Fade",
-        "Instant",
-        "Mono",
-        "Noir",
-        "Process",
-        "Tonal",
-        "Transfer",
-        "Tone",
-        "Linear"
-    ]
-    
-    
-    /*func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    */
-    func swipe(){
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
+    func initSwipeGesture(){
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeForShare(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
         self.view.addGestureRecognizer(swipeUp)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeForShare(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
     }
@@ -70,7 +41,7 @@ class FiltersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        swipe()
+        initSwipeGesture()
        
         originalImage.image = imgOriginal
         
@@ -85,8 +56,10 @@ class FiltersViewController: UIViewController {
        var itemCount = 0
         
         // Loop for creating buttons ------------------------------------------------------------
-        for i in 0..<CIFilterNames.count {
+        for i in 0..<Modele.CIFilterNames.count {
             itemCount = i
+            
+            
             
             // Button properties
             let filterButton = UIButton(type: .custom)
@@ -96,12 +69,13 @@ class FiltersViewController: UIViewController {
             filterButton.addTarget(self, action: #selector(filterButtonTapped(sender:)), for: .touchUpInside)
             filterButton.layer.cornerRadius = 6
             filterButton.clipsToBounds = true
-            filterButton.setTitle(CIFilterNamesList[i], for: .normal)
+            filterButton.setTitle(Modele.CIFilterNamesList[i], for: .normal)
             filterButton.setTitleColor(.black, for: .normal)
             filterButton.titleLabel?.font = UIFont(name: "ThirstySoftRegular", size: 17)
             
-            
-            
+            if i == 0 {
+                filterButton.setBackgroundImage(originalImage.image, for: .normal)
+            } else {
             // Create filters for each button
             let ciContext = CIContext(options: nil)
             let coreImage = CIImage(image: originalImage.image!)
@@ -114,7 +88,7 @@ class FiltersViewController: UIViewController {
          
             // Assign filtered image to the button
             filterButton.setBackgroundImage(imageForButton, for: .normal)
-            
+            }
             
             // Add Buttons in the Scroll View
             xCoord +=  buttonWidth + gapBetweenButtons

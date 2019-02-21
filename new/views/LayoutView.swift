@@ -56,7 +56,8 @@ class LayoutView: UIView {
         switch layout {
         case .layout1:
             imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth, height: layoutHeight / 2)
-            imageSubview[0].borders([.bottom], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            //imageSubview[0].borders([.bottom], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[0].borders(for: [.bottom], width: 4, color: UIColor(named: "border1")!)
             imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: 0, height: 0)
             //imageSubview[1].borders(<#T##localisation: [UIRectEdge]##[UIRectEdge]#>, thikness: <#T##CGFloat#>, bColor: <#T##UIColor#>)
             imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
