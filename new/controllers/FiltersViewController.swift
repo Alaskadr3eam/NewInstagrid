@@ -73,13 +73,13 @@ class FiltersViewController: UIViewController {
             filterButton.setTitleColor(.black, for: .normal)
             filterButton.titleLabel?.font = UIFont(name: "ThirstySoftRegular", size: 17)
             
-            if i == 0 {
+            if Modele.CIFilterNames[i] == "No Filter" {
                 filterButton.setBackgroundImage(originalImage.image, for: .normal)
             } else {
             // Create filters for each button
             let ciContext = CIContext(options: nil)
             let coreImage = CIImage(image: originalImage.image!)
-            let filter = CIFilter(name:  CIFilterNames[i] )
+            let filter = CIFilter(name:  Modele.CIFilterNames[i] )
             filter!.setDefaults()
             filter!.setValue(coreImage, forKey: kCIInputImageKey)
             let filteredImageData = filter!.value(forKey: kCIOutputImageKey) as! CIImage

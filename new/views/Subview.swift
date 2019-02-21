@@ -12,20 +12,18 @@ class Subview: UIView {
     
     @IBOutlet weak var buttonAddPicture: UIButton!
     @IBOutlet weak var image: UIImageView!
-  /*
-    var color = UIColor() {
+  
+    @IBInspectable var borderWidth: CGFloat = 1{
         didSet {
-            setNeedsDisplay()
+            layer.borderWidth = borderWidth
         }
     }
-    var lineWidth: CGFloat = 1
-    var edges = [UIRectEdge](){
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-*/
     
+    @IBInspectable var color: UIColor!{
+        didSet {
+            layer.borderColor = color?.cgColor
+        }
+    }
  //    var delegate1: pinchInImage?
     //var delegate: communicationView?
     
@@ -38,32 +36,22 @@ class Subview: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+ 
+ 
     
-    var width: CGFloat = 1 {
-        didSet {
-            layer.borderWidth = width
-        }
-    }
-    
-    var color: UIColor! {
-        didSet {
-            layer.borderColor = color.cgColor
-        }
-    }
-
 }
 
 
 
-
+/*
 
 extension Subview {
     func borders(for edges:[UIRectEdge], width:CGFloat = 1, color: UIColor = .black) {
         
-        if edges.contains(.all) {
+       /* if edges.contains(.all) {
             layer.borderWidth = self.width
             layer.borderColor = self.color.cgColor
-        } else {
+        } else {*/
             let allSpecificBorders:[UIRectEdge] = [.top, .bottom, .left, .right]
             
             for edge in allSpecificBorders {
@@ -103,11 +91,11 @@ extension Subview {
                 }
             }
         }
-    }
+    
 }
 
     
-/*
+
 extension Subview {
     
     override func draw(_ rect: CGRect) {

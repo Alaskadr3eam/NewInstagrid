@@ -14,7 +14,7 @@ import CoreImage
 class ViewController: UIViewController, communicationView, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
   
     
-
+    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var swipeGesture: UISwipeGestureRecognizer!
     
     @IBOutlet weak var viewForShare: LabelShareView!
@@ -89,7 +89,6 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.
         let actionSheet = UIAlertController(title: "Add Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction) in
@@ -163,8 +162,8 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         layoutSelected[index].isHidden = true
     }
 
-    @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer) {
-        if let swipeGesture = sender as? UISwipeGestureRecognizer {
+    @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer?) {
+        if let swipeGesture = sender {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.left:
                 let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
@@ -224,7 +223,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         let color = Modele.colorArray[i]
         layout.borderColor = color
         for y in 0..<layout.imageSubview.count {
-            layout.imageSubview[y].color = color
+           layout.imageSubview[y].color = color
         }
         
     }
@@ -245,27 +244,32 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
     }
     
+    let step: Float = 0.5
     
     @IBAction func sliderThiknessBorder(_ sender: UISlider){
+       // var senderIntValue = Int(sender.value)
+        let roundedValue = round(sender.value / step) * step
+        sender.value = roundedValue
         if layout.layout == .layout1 {
-        layout.borderWidth = CGFloat(sender.value)
-            for y in 0..<layout.imageSubview.count {
-            layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
-            }
-        selectedLayout(buttonLayout[0])
-        } else if layout.layout == .layout2 {
             layout.borderWidth = CGFloat(sender.value)
             for y in 0..<layout.imageSubview.count {
-                layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
+            layout.imageSubview[y].borderWidth = CGFloat(sender.value)
+                print(sender.value)
+            }
+        selectedLayout(buttonLayout[0])
+        }/* else if layout.layout == .layout2 {
+            layout.borderWidth = CGFloat(sender.value)
+            for y in 0..<layout.imageSubview.count {
+               layout.imageSubview[y].borderWidth = CGFloat(sender.value)
             }
             selectedLayout(buttonLayout[1])
         } else {
             layout.borderWidth = CGFloat(sender.value)
             for y in 0..<layout.imageSubview.count {
-                layout.imageSubview[y].lineWidth = CGFloat(sender.value / 2)
+               layout.imageSubview[y].borderWidth = CGFloat(sender.value)
             }
             selectedLayout(buttonLayout[2])
-        }
+        }*/
     }
     
 }

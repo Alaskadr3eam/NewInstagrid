@@ -15,7 +15,8 @@ class LayoutView: UIView {
     
     @IBInspectable var borderWidth: CGFloat = 4 {
         didSet {
-            layer.borderWidth = borderWidth
+            
+             layer.borderWidth = borderWidth
         }
     }
     
@@ -51,37 +52,25 @@ class LayoutView: UIView {
     }
     
     private func setLayout(_ layout: Layout) {
-        let layoutWidth = self.bounds.width - (self.borderWidth * 2)
-        let layoutHeight = self.bounds.height - (self.borderWidth * 2)
+       
+        let layoutWidth = self.bounds.width - (self.borderWidth*2)
+        let layoutHeight = self.bounds.height - (self.borderWidth*2)
         switch layout {
         case .layout1:
             imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth, height: layoutHeight / 2)
-            //imageSubview[0].borders([.bottom], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
-            imageSubview[0].borders(for: [.bottom], width: 4, color: UIColor(named: "border1")!)
-            imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: 0, height: 0)
-            //imageSubview[1].borders(<#T##localisation: [UIRectEdge]##[UIRectEdge]#>, thikness: <#T##CGFloat#>, bColor: <#T##UIColor#>)
-            imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[2].borders([.top,.right], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
-            imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[3].borders([.left,.top], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
+            imageSubview[1].frame = CGRect(x: (self.bounds.width / 2), y: borderWidth, width: 0, height: 0)
+            imageSubview[2].frame = CGRect(x: borderWidth, y: (self.bounds.height / 2), width: (layoutWidth / 2), height: layoutHeight / 2)
+            imageSubview[3].frame = CGRect(x: (self.bounds.width / 2), y: (self.bounds.height / 2), width: layoutWidth / 2, height: layoutHeight / 2)
         case .layout2:
             imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[0].borders([.bottom,.right], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
             imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[1].borders([.bottom,.left], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
             imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth, height: layoutHeight / 2)
-            imageSubview[2].borders([.top], thikness: borderWidth/2, bColor: UIColor(named: "border1")!)
             imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: 0, height: 0)
-           // imageSubview[3]
         case .layout3:
             imageSubview[0].frame = CGRect(x: borderWidth, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[0].borders([.bottom,.right], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
             imageSubview[1].frame = CGRect(x: self.bounds.width / 2, y: borderWidth, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[1].borders([.bottom,.left], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
             imageSubview[2].frame = CGRect(x: borderWidth, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[2].borders([.top,.right], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
             imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
-            imageSubview[3].borders([.left,.top], thikness: borderWidth / 2, bColor: UIColor(named: "border1")!)
         }
     }
     
