@@ -22,11 +22,16 @@ class Modele {
         "CIPhotoEffectTonal",
         "CIPhotoEffectTransfer",
         "CILinearToSRGBToneCurve",
-        "CISRGBToneCurveToLinear"
+        "CISRGBToneCurveToLinear",
+        "CIColorCrossPolynomial",
+        "CIColorInvert",
+        "CIGaussianBlur",
+        "CIDiscBlur"
+       
     ]
     
     static var CIFilterNamesList = [
-        "no filtre",
+        "No filtre",
         "Chrome",
         "Fade",
         "Instant",
@@ -36,7 +41,13 @@ class Modele {
         "Tonal",
         "Transfer",
         "Tone",
-        "Linear"
+        "Linear",
+        "Polynomial",
+        "Invert",
+        "GaussianBlur",
+        "Blur"
+       
+       
     ]
     
    static let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow,UIColor(named: "border1")]

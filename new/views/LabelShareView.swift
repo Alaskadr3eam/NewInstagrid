@@ -13,25 +13,7 @@ class LabelShareView: UIView {
     @IBOutlet weak var shareLabel: UILabel!
     @IBOutlet weak var iconArrow: UIImageView!
    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
-    /*private func deviceOrientation(orientation: UIDeviceOrientation) {
-        switch orientation {
-        case .portrait:
-        case .landscapeRight:
-        case .landscapeLeft:
-        default: break
-        }
-    }*/
   
-
-
 }
 
 

@@ -22,13 +22,14 @@ class FiltersViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var originalImage: UIImageView!
     @IBOutlet weak var imageToFilter: UIImageView!
+    @IBOutlet weak var swipeGesture: UISwipeGestureRecognizer!
     var imgOriginal = UIImage()
     
     @IBOutlet weak var filtersScrollView: UIScrollView!
     
     /* GLOBAL VARIABLES */
    
-    
+  
     func initSwipeGesture(){
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeForShare(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
@@ -39,8 +40,38 @@ class FiltersViewController: UIViewController {
         self.view.addGestureRecognizer(swipeLeft)
     }
  
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name:UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func deviceOrientationDidChange(_ notification: Notification) {
+        //let orientation = UIDevice.current.orientation
+        if UIDevice.current.orientation.isPortrait {
+            viewForShare.shareLabel.text = "Swipe to up for share"
+            viewForShare.iconArrow.image = UIImage(named: "arrow1")
+            
+        }
+        if UIDevice.current.orientation.isLandscape {
+            viewForShare.shareLabel.text = "Swipe to left for share"
+            viewForShare.iconArrow.image = UIImage(named: "arrow2")
+        }
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+     
         
         initSwipeGesture()
        
@@ -75,6 +106,7 @@ class FiltersViewController: UIViewController {
             filterButton.titleLabel?.font = UIFont(name: "ThirstySoftRegular", size: 17)
             
             if Modele.CIFilterNames[i] == "No Filter" {
+                
                 filterButton.setBackgroundImage(originalImage.image, for: .normal)
             } else {
             // Create filters for each button
@@ -113,9 +145,9 @@ class FiltersViewController: UIViewController {
     }
     
     
-    
-    @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer) {
-        if let swipeGesture = sender as? UISwipeGestureRecognizer {
+    // SWIPE FOR SHARE ACTION
+    @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer!) {
+        if let swipeGesture = sender {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.left:
                 let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
@@ -150,7 +182,6 @@ class FiltersViewController: UIViewController {
     
     func shareImg() {
         shareLayoutUsingActivityViewController(imageParamater: (imageToFilter.image!))
-        
         UIImageWriteToSavedPhotosAlbum(imageToFilter.image!, nil, nil, nil)
         
     }
@@ -165,16 +196,7 @@ class FiltersViewController: UIViewController {
         
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        if UIDevice.current.orientation.isPortrait {
-            viewForShare.shareLabel.text = "Swipe to up for share"
-            viewForShare.iconArrow.image = UIImage(named: "arrow1")
-        }
-        if UIDevice.current.orientation.isLandscape {
-            viewForShare.shareLabel.text = "Swipe to left for share"
-            viewForShare.iconArrow.image = UIImage(named: "arrow2")
-        }
-    }
+    
     
 
     
