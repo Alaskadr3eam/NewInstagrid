@@ -39,6 +39,10 @@ class Modele {
         "Linear"
     ]
     
-   static let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow]
+   static let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow,UIColor(named: "border1")]
+    
+    func reStart() {
+        
+    }
     
 }

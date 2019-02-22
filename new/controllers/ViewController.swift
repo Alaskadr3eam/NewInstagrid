@@ -17,7 +17,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var swipeGesture: UISwipeGestureRecognizer!
     
-    @IBOutlet weak var viewForShare: LabelShareView!
+    @IBOutlet weak var viewForAddFilter: LabelShareView!
     
     @IBOutlet var buttonLayout: [UIButton]!
     @IBOutlet weak var layout: LayoutView!
@@ -61,12 +61,12 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if UIDevice.current.orientation.isPortrait {
-            viewForShare.shareLabel.text = "Swipe to up for share"
-            viewForShare.iconArrow.image = UIImage(named: "arrow1")
+            viewForAddFilter.shareLabel.text = "Swipe to up for filter"
+            viewForAddFilter.iconArrow.image = UIImage(named: "arrow1")
         }
         if UIDevice.current.orientation.isLandscape {
-            viewForShare.shareLabel.text = "Swipe to left for share"
-            viewForShare.iconArrow.image = UIImage(named: "arrow2")
+            viewForAddFilter.shareLabel.text = "Swipe to left for filter"
+            viewForAddFilter.iconArrow.image = UIImage(named: "arrow2")
         }
     }
     
@@ -118,7 +118,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
     }
     
-    @IBAction func selectedLayout(_ sender: UIButton) {
+   @IBAction func selectedLayout(_ sender: UIButton) {
         switch sender {
         case buttonLayout[0]:
             layout.layout = .layout1
@@ -167,10 +167,10 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.left:
                 let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
-                
+                /*
                 actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
                     self.shareImg()
-                }))
+                }))*/
                 actionSheet.addAction(UIAlertAction(title: "Add to filter", style: .default, handler: { (action: UIAlertAction!) in
                     self.performSegue(withIdentifier: "Filter", sender: self)
                 }))
@@ -180,10 +180,10 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
                 
             case UISwipeGestureRecognizer.Direction.up:
                 let actionSheet = UIAlertController(title: "For Your Picture", message: "Choose An Option", preferredStyle: . actionSheet)
-                
+                /*
                 actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
                     self.shareImg()
-                }))
+                }))*/
                 actionSheet.addAction(UIAlertAction(title: "Add to Filter", style: .default, handler:{ (action:UIAlertAction) in
                     self.performSegue(withIdentifier: "Filter", sender: self)
                 }))
@@ -202,7 +202,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         }
         return imgOriginal
     }
-    
+   /*
     func shareImg() {
         shareLayoutUsingActivityViewController(imageParamater: (transformateViewOnImage()))
         
@@ -218,7 +218,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         self.present(objActivityViewController, animated: true, completion: nil)
         
     }
-    
+    */
     func attributedColor() {
         let color = Modele.colorArray[i]
         layout.borderColor = color
@@ -246,7 +246,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     
     let step: Float = 0.5
     
-    @IBAction func sliderThiknessBorder(_ sender: UISlider){
+    @IBAction func sliderModifiedThiknessBorder(_ sender: UISlider){
        // var senderIntValue = Int(sender.value)
         let roundedValue = round(sender.value / step) * step
         sender.value = roundedValue
@@ -257,7 +257,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
                 print(sender.value)
             }
         selectedLayout(buttonLayout[0])
-        }/* else if layout.layout == .layout2 {
+        }else if layout.layout == .layout2 {
             layout.borderWidth = CGFloat(sender.value)
             for y in 0..<layout.imageSubview.count {
                layout.imageSubview[y].borderWidth = CGFloat(sender.value)
@@ -269,7 +269,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
                layout.imageSubview[y].borderWidth = CGFloat(sender.value)
             }
             selectedLayout(buttonLayout[2])
-        }*/
+        }
     }
     
 }

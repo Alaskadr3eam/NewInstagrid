@@ -18,6 +18,7 @@ import CoreImage
 class FiltersViewController: UIViewController {
   
     /* Views */
+    @IBOutlet weak var viewForShare: LabelShareView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var originalImage: UIImageView!
     @IBOutlet weak var imageToFilter: UIImageView!
@@ -135,7 +136,7 @@ class FiltersViewController: UIViewController {
                 actionSheet.addAction(UIAlertAction(title: "Share", style: .default, handler: { (action:UIAlertAction) in
                     self.shareImg()
                 }))
-                actionSheet.addAction(UIAlertAction(title: "Annulate", style: .default, handler: { (action:UIAlertAction) in
+                actionSheet.addAction(UIAlertAction(title: "Return", style: .default, handler: { (action:UIAlertAction) in
                     self.performSegue(withIdentifier: "Return", sender: self)
                 }))
                 actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil
@@ -163,6 +164,19 @@ class FiltersViewController: UIViewController {
         self.present(objActivityViewController, animated: true, completion: nil)
         
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isPortrait {
+            viewForShare.shareLabel.text = "Swipe to up for share"
+            viewForShare.iconArrow.image = UIImage(named: "arrow1")
+        }
+        if UIDevice.current.orientation.isLandscape {
+            viewForShare.shareLabel.text = "Swipe to left for share"
+            viewForShare.iconArrow.image = UIImage(named: "arrow2")
+        }
+    }
+    
+
     
     
     
