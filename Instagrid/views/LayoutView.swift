@@ -12,14 +12,14 @@ import QuartzCore
 @IBDesignable
 
 class LayoutView: UIView {
-    
+    // thickness border
     @IBInspectable var borderWidth: CGFloat = 4 {
         didSet {
             
              layer.borderWidth = borderWidth
         }
     }
-    
+    // color border
     @IBInspectable var borderColor: UIColor? {
         didSet {
             layer.borderColor = borderColor?.cgColor
@@ -50,7 +50,7 @@ class LayoutView: UIView {
             setLayout(layout)
         }
     }
-    
+    // CREAT FRAME FUTUR LAYOUT OF ENUM
     private func setLayout(_ layout: Layout) {
        
         let layoutWidth = self.bounds.width - (self.borderWidth*2)
@@ -73,7 +73,7 @@ class LayoutView: UIView {
             imageSubview[3].frame = CGRect(x: self.bounds.width / 2, y: self.bounds.height / 2, width: layoutWidth / 2, height: layoutHeight / 2)
         }
     }
-    
+    // FUNC BUTTON SUBVIEW => DELEGATE
     @IBAction func pushButton(button: UIButton) {
         switch button {
         case imageSubview[0].buttonAddPicture:
@@ -93,7 +93,7 @@ class LayoutView: UIView {
     
 
 }
-
+// PROTOCOLE FOR DELEGATE
 protocol communicationView {
     func tellMeWhenTheButtonIsClicked(view: Subview)
 }

@@ -10,7 +10,7 @@
 import UIKit
 
 class Modele {
-    
+    //ARRAY FOR FILTER
    static var CIFilterNames = [
         "No Filter",
         "CIPhotoEffectChrome",
@@ -29,7 +29,7 @@ class Modele {
         "CIDiscBlur"
        
     ]
-    
+    //ARRAY FOR FILTERNAME
     static var CIFilterNamesList = [
         "No filtre",
         "Chrome",
@@ -49,11 +49,9 @@ class Modele {
        
        
     ]
-    
+    //ARRAY FOR COLOR BORDER
    static let colorArray = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.clear, UIColor.cyan, UIColor.darkGray, UIColor.gray, UIColor.green, UIColor.lightGray, UIColor.magenta,UIColor.orange, UIColor.purple, UIColor.red, UIColor.white, UIColor.yellow,UIColor(named: "border1")]
     
-    func reStart() {
-        
-    }
+
     
 }

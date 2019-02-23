@@ -18,7 +18,7 @@ import CoreImage
 class FiltersViewController: UIViewController {
   
     /* Views */
-    @IBOutlet weak var viewForShare: LabelShareView!
+    @IBOutlet weak var viewForShare: LabelView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var originalImage: UIImageView!
     @IBOutlet weak var imageToFilter: UIImageView!
@@ -27,9 +27,9 @@ class FiltersViewController: UIViewController {
     
     @IBOutlet weak var filtersScrollView: UIScrollView!
     
-    /* GLOBAL VARIABLES */
+    
    
-  
+  //INIT SWIPE FOR VIEWCONTROLLER
     func initSwipeGesture(){
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeForShare(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
@@ -41,7 +41,7 @@ class FiltersViewController: UIViewController {
     }
  
     
-    
+  //FUNCTION FOR KNOW ORIENTATION DEVICE => NOTIFICATION
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -53,7 +53,7 @@ class FiltersViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self)
     }
-    
+   //FUNC TO MODIFY THE TEXT FOLLOWING THE ORIENTATION DEVICE
     @objc func deviceOrientationDidChange(_ notification: Notification) {
         //let orientation = UIDevice.current.orientation
         if UIDevice.current.orientation.isPortrait {
@@ -145,7 +145,7 @@ class FiltersViewController: UIViewController {
     }
     
     
-    // SWIPE FOR SHARE ACTION
+    // SWIPE FOR SHARE ACTION OR RETURN
     @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer!) {
         if let swipeGesture = sender {
             switch swipeGesture.direction {

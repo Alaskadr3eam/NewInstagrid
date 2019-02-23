@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LabelShareView: UIView {
+class LabelView: UIView {
 
     @IBOutlet weak var shareLabel: UILabel!
     @IBOutlet weak var iconArrow: UIImageView!

@@ -17,7 +17,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var swipeGesture: UISwipeGestureRecognizer!
     
-    @IBOutlet weak var viewForAddFilter: LabelShareView!
+    @IBOutlet weak var viewForAddFilter: LabelView!
    
     
     @IBOutlet var buttonLayout: [UIButton]!
@@ -42,7 +42,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
     }
     
-    
+    // FUNC TO PASS AN IMAGE FROM ONE VIEWCONTROLLER TO ANOTHER
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Filter"{
             let filtersViewController = segue.destination as! FiltersViewController
@@ -50,17 +50,17 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         }
     }
     
-   
+   // FUNC TO INIT SWIPEGESTURE FOR THE CONTROLLER
     func initSwipeGesture(){
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForAddFilter(_:)))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
         self.view.addGestureRecognizer(swipeUp)
     
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForShare(_:)))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeForAddFilter(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
     }
-    
+   //FUNCTION FOR KNOW ORIENTATION DEVICE => NOTIFICATION
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -72,7 +72,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         
         NotificationCenter.default.removeObserver(self)
     }
-    
+   //FUNC TO MODIFY THE TEXT FOLLOWING THE ORIENTATION DEVICE
     @objc func deviceOrientationDidChange(_ notification: Notification) {
         //let orientation = UIDevice.current.orientation
         if UIDevice.current.orientation.isPortrait {
@@ -85,12 +85,12 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
             viewForAddFilter.iconArrow.image = UIImage(named: "arrow2")
         }
     }
- 
+ // FUNC DELEGATE
     func tellMeWhenTheButtonIsClicked(view: Subview) {
         selectImageView = view.image
         pickPicture()
     }
-
+//FUNCTION TO RECOVER PHOTO
     func pickPicture() {
         
         let imagePicker = UIImagePickerController()
@@ -118,13 +118,13 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         present(actionSheet, animated: true, completion: nil)
         
     }
-    
+  //FUNC PICK IMAGE IN IMAGEVIEW
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         selectImageView.image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         dismiss(animated: true, completion: nil)
         
     }
-    
+  //FUNC SELECTED LAYOUT
    @IBAction func selectedLayout(_ sender: UIButton) {
         switch sender {
         case buttonLayout[0]:
@@ -168,8 +168,8 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     private func isHidden(index: Int){
         layoutSelected[index].isHidden = true
     }
-
-    @IBAction func swipeForShare(_ sender: UISwipeGestureRecognizer?) {
+// FUNC FOR ACCESS FILTERSVIEWCONTROLLER
+    @IBAction func swipeForAddFilter(_ sender: UISwipeGestureRecognizer?) {
         if let swipeGesture = sender {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.left:
@@ -195,7 +195,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
             }
         }
     }
-    
+  // FUNC TO TRANSFORMATE VIEW IN UIIMAGE
     private func transformateViewOnImage() -> UIImage{
         let renderer = UIGraphicsImageRenderer(size: layout.bounds.size)
         let imgOriginal = renderer.image { ctx in
@@ -203,7 +203,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
         }
         return imgOriginal
     }
-
+// FUNCTION GROUP TO CHANGE THE COLOR OF THE EDGE
     private func attributedColor() {
         let color = Modele.colorArray[i]
         layout.borderColor = color
@@ -229,7 +229,7 @@ class ViewController: UIViewController, communicationView, UIImagePickerControll
     }
     
     
-    
+  // FUNCTION TO CHANGE THE THICKNESS OF BORDERS
     @IBAction func sliderModifiedThiknessBorder(_ sender: UISlider){
         let step: Float = 0.5
         let roundedValue = round(sender.value / step) * step

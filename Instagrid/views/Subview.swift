@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// CREAT VIEW
 class Subview: UIView {
     
     @IBOutlet weak var buttonAddPicture: UIButton!
